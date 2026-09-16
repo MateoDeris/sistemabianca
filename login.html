@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="img/logo.png">
+<title>Energy Paper — Entrar</title>
+<style>
+  :root{
+    --bg:#14100d;
+    --bg-elevated:#1c1611;
+    --bg-card:#221a14;
+    --bg-card-hover:#291f18;
+    --border:#3a2c21;
+    --border-soft:#2a2119;
+    --flame1:#ff5722;
+    --gold:#ffc247;
+    --pink:#ff5fa8;
+    --pink-soft:#ff8fc2;
+    --violet:#a06bff;
+    --sky:#4fc3f7;
+    --grad-fem: linear-gradient(90deg, var(--pink), var(--violet) 55%, var(--sky));
+    --text:#f6ede0;
+    --text-muted:#b3a08a;
+    --text-faint:#7d6c58;
+    --danger:#ff5c5c;
+    --danger-bg:rgba(255,92,92,.12);
+    --radius-lg:22px;
+    --radius-md:12px;
+    --radius-sm:8px;
+    --shadow: 0 20px 60px rgba(0,0,0,.45);
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  [data-theme="light"]{
+    --bg:#fdf4f8;
+    --bg-elevated:#ffffff;
+    --bg-card:#fffafc;
+    --bg-card-hover:#fef0f7;
+    --border:#f3d9e8;
+    --border-soft:#f8e6f0;
+    --text:#2a1a22;
+    --text-muted:#8a6a78;
+    --text-faint:#b697a5;
+    --danger:#d63b3b;
+    --danger-bg:rgba(214,59,59,.08);
+    --shadow: 0 20px 60px rgba(160,90,150,.18);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+  body{
+    font-family:var(--font);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+    padding:20px;
+    background-image:url('img/fondologin.png');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+  }
+
+  .card-frame{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:330px;
+    margin-top:9vh;
+    border-radius:var(--radius-lg);
+    padding:2px;
+    background:var(--grad-fem);
+    box-shadow:0 20px 55px rgba(0,0,0,.45);
+  }
+  .card{
+    width:100%;
+    background:rgba(14,10,8,.72);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border-radius:calc(var(--radius-lg) - 2px);
+    padding:28px 24px 22px;
+  }
+  [data-theme="light"] .card{
+    background:rgba(255,255,255,.72);
+  }
+
+  .logo-wrap{ display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:18px; }
+  .logo-wrap img{
+    width:72px; height:72px;
+    border-radius:18px;
+    object-fit:cover;
+    box-shadow:0 10px 26px rgba(255,95,168,.35);
+    margin-bottom:12px;
+  }
+  .logo-wrap h1{
+    font-size:17px;
+    font-weight:800;
+    background:var(--grad-fem);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .logo-wrap p{
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:.4px;
+    margin-top:2px;
+  }
+
+  form{ display:flex; flex-direction:column; gap:12px; }
+  .field label{
+    display:block;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--text-muted);
+    margin-bottom:6px;
+  }
+  .input-wrap{ position:relative; }
+  .input-wrap svg.lead{
+    position:absolute; left:13px; top:50%; transform:translateY(-50%);
+    width:16px; height:16px; color:var(--text-faint); pointer-events:none;
+  }
+  .field input{
+    width:100%;
+    padding:12px 14px 12px 38px;
+    border-radius:var(--radius-sm);
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(0,0,0,.22);
+    color:var(--text);
+    font-size:14.5px;
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  .field input:focus{ border-color:var(--pink); }
+  [data-theme="light"] .field input{ background:rgba(255,255,255,.55); border-color:rgba(255,255,255,.6); }
+  .toggle-eye{
+    position:absolute; right:10px; top:50%; transform:translateY(-50%);
+    width:28px; height:28px;
+    display:flex; align-items:center; justify-content:center;
+    border:none; background:none; color:var(--text-faint); cursor:pointer;
+    border-radius:7px;
+  }
+  .toggle-eye:hover{ color:var(--text); }
+  .toggle-eye svg{ width:16px; height:16px; }
+
+  .row-between{
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:12.5px; color:var(--text-muted);
+  }
+  .remember{ display:flex; align-items:center; gap:7px; cursor:pointer; user-select:none; }
+  .remember input{ accent-color:var(--pink); width:14px; height:14px; cursor:pointer; }
+
+  .btn-login{
+    margin-top:4px;
+    padding:13px;
+    border-radius:var(--radius-sm);
+    border:none;
+    background:var(--grad-fem);
+    color:#fff;
+    font-size:14.5px;
+    font-weight:800;
+    letter-spacing:.2px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    box-shadow:0 8px 22px rgba(255,95,168,.3);
+    transition:filter .15s ease, transform .1s ease;
+  }
+  .btn-login:hover{ filter:brightness(1.07); }
+  .btn-login:active{ transform:scale(.98); }
+  .btn-login svg{ width:16px; height:16px; }
+
+  .error-msg{
+    display:none;
+    align-items:center;
+    gap:8px;
+    background:var(--danger-bg);
+    color:var(--danger);
+    border-radius:var(--radius-sm);
+    padding:10px 12px;
+    font-size:12.5px;
+    font-weight:600;
+  }
+  .error-msg.show{ display:flex; }
+  .error-msg svg{ width:15px; height:15px; flex-shrink:0; }
+
+  .card-frame.shake{ animation:shakeIt .38s ease; }
+  @keyframes shakeIt{
+    0%,100%{ transform:translateX(0); }
+    20%{ transform:translateX(-8px); }
+    40%{ transform:translateX(7px); }
+    60%{ transform:translateX(-5px); }
+    80%{ transform:translateX(4px); }
+  }
+
+  .theme-toggle-fab{
+    position:fixed; top:18px; right:18px; z-index:2;
+    width:38px; height:38px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--bg-card);
+    color:var(--text-muted);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .theme-toggle-fab:hover{ color:var(--text); border-color:var(--pink); }
+  .theme-toggle-fab svg{ width:16px; height:16px; }
+
+  .foot-note{
+    text-align:center;
+    margin-top:20px;
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:.3px;
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle-fab" id="themeToggle" title="Alternar tema">
+  <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+</button>
+
+<div class="card-frame" id="loginCard">
+<div class="card">
+  <div class="logo-wrap">
+    <img src="img/logo.png" alt="Logo Energy Paper">
+    <h1>Energy Paper</h1>
+    <p>PAPELARIA &amp; MAQUIAGEM</p>
+  </div>
+
+  <form id="loginForm" autocomplete="off">
+    <div class="field">
+      <label for="loginUser">Usuário</label>
+      <div class="input-wrap">
+        <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <input type="text" id="loginUser" placeholder="Digite seu usuário" autocomplete="username">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="loginPass">Senha</label>
+      <div class="input-wrap">
+        <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <input type="password" id="loginPass" placeholder="Digite sua senha" autocomplete="current-password" style="padding-right:40px;">
+        <button type="button" class="toggle-eye" id="togglePass" title="Mostrar senha">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="row-between">
+      <label class="remember">
+        <input type="checkbox" id="rememberMe" checked>
+        Lembrar de mim
+      </label>
+    </div>
+
+    <div class="error-msg" id="errorMsg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+      <span id="errorText">Usuário ou senha incorretos</span>
+    </div>
+
+    <button type="submit" class="btn-login" id="btnLogin">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      Entrar
+    </button>
+  </form>
+
+  <p class="foot-note">Acesso restrito &middot; uso pessoal</p>
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var VALID_USER = "Bianca";
+  var VALID_PASS = "bianca2026!energy";
+  var AUTH_KEY = "ep_auth";
+
+  /* Tema */
+  var html = document.documentElement;
+  var themeBtn = document.getElementById('themeToggle');
+  var themeIcon = document.getElementById('themeIcon');
+  var SUN = '<path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5 19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5 19 5"/><circle cx="12" cy="12" r="4"/>';
+  var MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/>';
+  function applyTheme(t){
+    html.setAttribute('data-theme', t);
+    themeIcon.innerHTML = (t === 'dark') ? MOON : SUN;
+    localStorage.setItem('ep_theme', t);
+  }
+  applyTheme(localStorage.getItem('ep_theme') || 'dark');
+  themeBtn.addEventListener('click', function(){
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  /* Se já estiver logada, pula direto pro sistema */
+  if(localStorage.getItem(AUTH_KEY) === 'true' || sessionStorage.getItem(AUTH_KEY) === 'true'){
+    window.location.replace('index.html');
+  }
+
+  /* Mostrar/ocultar senha */
+  var passInput = document.getElementById('loginPass');
+  var toggleBtn = document.getElementById('togglePass');
+  toggleBtn.addEventListener('click', function(){
+    var isPass = passInput.type === 'password';
+    passInput.type = isPass ? 'text' : 'password';
+  });
+
+  /* Login */
+  var form = document.getElementById('loginForm');
+  var card = document.getElementById('loginCard');
+  var errorMsg = document.getElementById('errorMsg');
+  var errorText = document.getElementById('errorText');
+
+  function showError(msg){
+    errorText.textContent = msg;
+    errorMsg.classList.add('show');
+    card.classList.remove('shake');
+    void card.offsetWidth;
+    card.classList.add('shake');
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var user = document.getElementById('loginUser').value.trim();
+    var pass = document.getElementById('loginPass').value;
+    var remember = document.getElementById('rememberMe').checked;
+
+    if(!user || !pass){
+      showError('Preencha usuário e senha');
+      return;
+    }
+    if(user.toLowerCase() === VALID_USER.toLowerCase() && pass === VALID_PASS){
+      errorMsg.classList.remove('show');
+      if(remember){
+        localStorage.setItem(AUTH_KEY, 'true');
+        sessionStorage.removeItem(AUTH_KEY);
+      }else{
+        sessionStorage.setItem(AUTH_KEY, 'true');
+        localStorage.removeItem(AUTH_KEY);
+      }
+      window.location.href = 'index.html';
+    }else{
+      showError('Usuário ou senha incorretos');
+    }
+  });
+})();
+</script>
+</body>
+</html>
